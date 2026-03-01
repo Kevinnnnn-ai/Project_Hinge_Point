@@ -1,5 +1,8 @@
-# file is currently archived and not used
-# login systems are hard to implement and maintain, and may not be worth it for the app's intended use case
+# +-------------------------------------------------------------------------+
+# | file is currently archived and not used in the app.                     |
+# | login systems are hard to implement and maintain, and may not be worth  |
+# | it for the app's intended use case.                                     |
+# +-------------------------------------------------------------------------+
 
 import streamlit as st
 import streamlit_authenticator as stauth

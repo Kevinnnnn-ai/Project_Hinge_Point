@@ -1,2 +1,3 @@
 streamlit>=1.54.0
-streamlit-authenticator>=0.4.2
+streamlit[charts]
+scipy>=1.17.1

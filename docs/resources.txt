@@ -1,9 +1,11 @@
 Streamlit-Authentication documentation:
+(only used in the archived "main_with_login.py" script)
 https://github.com/mkhorasani/Streamlit-Authenticator
 
 Streamlit documentation:
 https://docs.streamlit.io/get-started
 
 Common command line fix:
+(a common GitHub problem when committing)
 git pull origin main --rebase
 git push origin main
