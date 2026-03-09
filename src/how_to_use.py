@@ -17,8 +17,4 @@ st.set_page_config(
 # ============================
 
 if __name__ == '__main__':
-    header()
-    separator()
     
-    dataframes = combine_dataframes()
-    aggregate_calculations(dataframes)
