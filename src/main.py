@@ -10,6 +10,8 @@ def get_pages() -> dict:
     pages = {
         'Navigation': [
             st.Page('home.py', title='Home', default=True),
+            st.Page('how_to_use.py', title='How To Use'),
+            st.Page('what_is_effect_size.py', title='What is Effect Size'),
             st.Page('dashboard.py', title='Dashboard'),
             st.Page('about.py', title='About'),
         ],
