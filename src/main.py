@@ -2,6 +2,10 @@ import streamlit as st
 import uuid # for workspace IDs
 import workspace # workspace.py
 
+# ============================
+# primary app functionality
+# ============================
+
 def get_pages() -> dict:
     pages = {
         'Navigation': [
@@ -51,6 +55,10 @@ def sidebar_funtionality() -> None:
     with st.sidebar:
         if st.button('Create New Workspace'):
             get_new_workspace()
+
+# ============================
+# execution logic
+# ============================
 
 if __name__ == '__main__':
     get_workspaces()
