@@ -14,6 +14,7 @@ def get_pages() -> dict:
             st.Page('what_is_effect_size.py', title='What Is Effect Size'),
             st.Page('dashboard.py', title='Dashboard'),
             st.Page('about.py', title='About'),
+            st.Page('terms_of_service.py', title='Terms of Service'),
         ],
         'Workspaces': [],
     }
