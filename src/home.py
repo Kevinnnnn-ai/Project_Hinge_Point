@@ -39,7 +39,7 @@ def description() -> None:
         col_1, col_2 = st.columns(spec=2, vertical_alignment='center')
 
         with col_1:
-            st.image(image='./res/test_data_1_comp_hist.png', width='stretch')
+            st.image(image='res/test_data_1_comp_hist.png', width='stretch')
 
         with col_2:
             st.markdown(
