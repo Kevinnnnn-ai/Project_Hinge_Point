@@ -171,86 +171,231 @@ def metric_summary(workspace_id: str) -> None:
         if dataframe is not None:
             with col_1:
                 st.markdown('#### **Pre-test**:')
-                st.dataframe(
-                    data={
-                        'Metric': [
-                            'Min',
-                            'Max',
-                            'Range',
-                            'Mean (x̄₁)',
-                            '1st Quartile (Q1₁)',
-                            '3rd Quartile (Q3₁)',
-                            'Interquartile Range (IQR₁)',
-                            'Standard Deviation (s₁)',
-                        ],
-                        'Value': [
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_min']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_max']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_range']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_mean']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_q1']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_q3']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_iqr']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_std']:.2f}',
-                        ],
-                    }
-                )
+
+                try:
+                    st.dataframe(
+                        data={
+                            'Metric': [
+                                'Min',
+                                'Max',
+                                'Range',
+                                'Mean (x̄₁)',
+                                '1st Quartile (Q1₁)',
+                                '3rd Quartile (Q3₁)',
+                                'Interquartile Range (IQR₁)',
+                                'Standard Deviation (s₁)',
+                            ],
+                            'Value': [
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_min']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_max']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_range']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_mean']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_q1']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_q3']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_iqr']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_std']:.2f}',
+                            ],
+                        }
+                    )
+                except:
+                    st.error('**RUNTIME ERROR**: Pre-test metric summary display error.')
 
             with col_2:
                 st.markdown('#### **Post-test**:')
+
+                try:
+                    st.dataframe(
+                        data={
+                            'Metric': [
+                                'Min',
+                                'Max',
+                                'Range',
+                                'Mean (x̄₂)',
+                                '1st Quartile (Q1₂)',
+                                '3rd Quartile (Q3₂)',
+                                'Interquartile Range (IQR₂)',
+                                'Standard Deviation (s₂)',
+                            ],
+                            'Value': [
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_min']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_max']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_range']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_mean']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_q1']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_q3']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_iqr']:.2f}',
+                                f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_std']:.2f}',
+                            ],
+                        }
+                    )
+                except:
+                    st.error('**RUNTIME ERROR**: Post-test metric summary display error.')
+
+            st.markdown('#### **Effect Size**:')
+
+            try:
                 st.dataframe(
                     data={
                         'Metric': [
-                            'Min',
-                            'Max',
-                            'Range',
-                            'Mean (x̄₁)',
-                            '1st Quartile (Q1₂)',
-                            '3rd Quartile (Q3₂)',
-                            'Interquartile Range (IQR₂)',
-                            'Standard Deviation (s₂)',
+                            'Effect Size (d)',
+                            'Hinge Point',
+                            'Is Above Hinge Point',
+                            'Sample Size (n)',
+                            'Mean Difference (Δx̄)',
+                            'Pooled Standard Deviation (sₚ)',
                         ],
                         'Value': [
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_min']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_max']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_range']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_mean']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_q1']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_q3']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_iqr']:.2f}',
-                            f'{st.session_state.workspaces[workspace_id]['post_score_statistics']['post_std']:.2f}',
+                            f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['cohens_d']:.2f}',
+                            f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['hinge_point']:.2f}',
+                            f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['is_above_hinge']}',
+                            f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['sample_size']}',
+                            f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['mean_diff']:.2f}',
+                            f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['pooled_std']:.2f}',
                         ],
                     }
                 )
-
-            st.markdown('#### **Effect Size**:')
-            st.dataframe(
-                data={
-                    'Metric': [
-                        "Effect Size (d)",
-                        'Hinge Point',
-                        'Is Above Hinge Point',
-                        'Sample Size (n)',
-                        'Mean Difference (Δx̄)',
-                        'Pooled Standard Deviation (sₚ)',
-                    ],
-                    'Value': [
-                        f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['cohens_d']:.2f}',
-                        f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['hinge_point']:.2f}',
-                        f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['is_above_hinge']}',
-                        f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['sample_size']}',
-                        f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['mean_diff']:.2f}',
-                        f'{st.session_state.workspaces[workspace_id]['dataframe_statistics']['pooled_std']:.2f}',
-                    ],
-                }
-            )
+            except:
+                st.error('**RUNTIME ERROR**: Effect size metric summary display error.')
 
         else:
             with col_1:
+                st.markdown('#### **Pre-test**:')
                 st.dataframe({'Metric': [], 'Value': []}, hide_index=True)
             with col_2:
+                st.markdown('#### **Post-test**:')
                 st.dataframe({'Metric': [], 'Value': []}, hide_index=True)
+            st.markdown('#### **Effect Size**:')
             st.dataframe({'Metric': [], 'Value': []}, hide_index=True)
+
+def key_metrics(workspace_id: str) -> None:
+    dataframe = st.session_state.workspaces[workspace_id]['dataframe']
+    with st.container(border=True):
+        st.markdown('# Key Metrics', unsafe_allow_html=True)
+        
+        col_1, col_2 = st.columns([1, 3])
+        if dataframe is not None:
+            post_mean   = st.session_state.workspaces[workspace_id]['post_score_statistics']['post_mean']
+            mean_diff   = st.session_state.workspaces[workspace_id]['dataframe_statistics']['mean_diff']
+            cohens_d    = st.session_state.workspaces[workspace_id]['dataframe_statistics']['cohens_d']
+            hinge_point = st.session_state.workspaces[workspace_id]['dataframe_statistics']['hinge_point']
+            is_above_hinge = st.session_state.workspaces[workspace_id]['dataframe_statistics']['is_above_hinge']
+            pre_std     = st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_std']
+            post_std    = st.session_state.workspaces[workspace_id]['post_score_statistics']['post_std']
+            pooled_std  = st.session_state.workspaces[workspace_id]['dataframe_statistics']['pooled_std']
+
+            try:
+                with col_1:
+                    st.metric(
+                        label='Post-test Mean (x̄₂)',
+                        border=True, value=f'{post_mean:.2f}',
+                        delta=f'{mean_diff:.2f}',
+                    )
+                    st.metric(
+                        label='Post-test SD (s₂)',
+                        value=f'{post_std:.2f}', border=True,
+                        delta=f'{post_std - pre_std:-.2f}', delta_color='inverse',
+                    )
+            except:
+                st.error('**RUNTIME ERROR**: Key metrics display 1 error.')
+            
+            try:
+                with col_2:
+                    if is_above_hinge:
+                        color = '#5ae086'
+                    else:
+                        color = '#ff6c6c'
+
+                    gauge = go.Figure(
+                        go.Indicator(
+                            mode='gauge+number+delta',
+                            value=cohens_d,
+                            number={'prefix': 'Effect Size (d): ','font': {'size': 25}},
+                            delta={'reference': hinge_point, 'suffix': ' from hinge'},
+                            gauge={
+                                'axis': {
+                                    'range': [0, 1.5],
+                                    'tickvals': [0.2, 0.4, 0.8, 1.2],
+                                    'ticktext': ['Small Effect', 'Hinge Point', 'Moderate Effect', 'Large Effect']
+                                },
+                                'bar': {'color': color},
+                                'steps': [
+                                    {'range': [0, 0.2],  'color': '#000000'},
+                                    {'range': [0.2, 0.4], 'color': '#252525'},
+                                    {'range': [0.4, 0.8], 'color': '#444444'},
+                                    {'range': [0.8, 1.2], 'color': '#656565'},
+                                    {'range': [1.2, 1.5], 'color': '#7c7c7c'},
+                                ],
+                                'threshold': {
+                                    'line': {'color': 'white', 'width': 2},
+                                    'thickness': 0.75,
+                                    'value': hinge_point,
+                                },
+                            },
+                        )
+                    
+                    )
+
+                    gauge.update_layout(
+                        height=250, margin=dict(t=60, b=0, l=40, r=40),
+                        paper_bgcolor='rgba(0,0,0,0)',
+                    )
+                    
+                    with st.container(border=True):
+                        st.plotly_chart(gauge, width='stretch', height=255)
+
+            except:
+                st.error('**RUNTIME ERROR**: Key metrics display 2 error.')
+    
+        else:
+            with col_1:
+                st.metric(
+                    label='Post-test Mean (x̄₂)',
+                    border=True, value=f'{0:.2f}',
+                    delta=f'{0:.2f}', delta_color='off',
+                )
+
+                st.metric(
+                    label='Post-test SD (s₂)',
+                    value=f'{0:.2f}', border=True,
+                    delta=f'{0:-.2f}', delta_color='off',
+                )
+
+            with col_2:
+                gauge = go.Figure(
+                    go.Indicator(
+                        mode='gauge+number+delta', value=0.00,
+                        number={'prefix': 'Effect Size (d): ','font': {'size': 25}},
+                        delta={'reference': 0.4, 'suffix': ' from hinge'},
+                        gauge={
+                            'axis': {
+                                'range': [0, 1.5],
+                                'tickvals': [0.2, 0.4, 0.8, 1.2],
+                                'ticktext': ['Small Effect', 'Hinge Point', 'Moderate Effect', 'Large Effect']
+                            },
+                            'bar': {'color': '#464646'},
+                            'steps': [
+                                {'range': [0, 0.2],  'color': '#000000'},
+                                {'range': [0.2, 0.4], 'color': '#252525'},
+                                {'range': [0.4, 0.8], 'color': '#444444'},
+                                {'range': [0.8, 1.2], 'color': '#656565'},
+                                {'range': [1.2, 1.5], 'color': '#7c7c7c'},
+                            ],
+                            'threshold': {
+                                'line': {'color': 'white', 'width': 2},
+                                'thickness': 0.75,
+                                'value': 0.4,
+                            },
+                        },
+                    )
+                )
+
+                gauge.update_layout(
+                    height=250, margin=dict(t=60, b=0, l=40, r=40),
+                    paper_bgcolor='rgba(0,0,0,0)',
+                )
+                
+                with st.container(border=True):
+                    st.plotly_chart(gauge, width='stretch', height=255)
 
 def make_workspace_page(workspace_id: str) -> callable:
     def workspace_page(): # convert workspace_id to a callable that can be used as a page
@@ -283,5 +428,6 @@ def make_workspace_page(workspace_id: str) -> callable:
         file_upload_and_preview(workspace_id=workspace_id)
         calculate(workspace_id=workspace_id)
         metric_summary(workspace_id=workspace_id)
+        key_metrics(workspace_id=workspace_id)
 
     return workspace_page
