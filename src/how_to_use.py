@@ -3,41 +3,25 @@ import main # main.py
 
 st.warning('THIS PAGE IS CURRENTLY UNDER DEVELOPMENT. YOU MAY ENCOUNTER ERRORS.')
 
-# ============================
-# page setup
-# ============================
-
 st.set_page_config(
     layout='centered',
     page_title='How To Use - Project Hinge Point',
     page_icon='assets/project_hinge_point_logo.png',
 )
 
-def separator() -> None:
-    st.markdown('---', unsafe_allow_html=True)
-
-def spacer() -> None:
-    st.markdown('#####', unsafe_allow_html=True)
-
-# ============================
-# page sections
-# ============================
-
-def header_section() -> None:
+def header() -> None:
     st.markdown(
         '''
-        # How To :red[Use] Project Hinge Point
-        From :grey[raw scores] to :grey[actionable insight] in three steps.
+        # How To Project Hinge Point
+        From raw scores to actionable insight in three steps.
         ''',
         unsafe_allow_html=True,
     )
 
-def workflow_section() -> None:
-    separator()
-    st.markdown('## :red[Workflow] Overview', unsafe_allow_html=True)
+def workflow() -> None:
+    st.markdown('## Workflow Overview', unsafe_allow_html=True)
 
     col_1, col_2, col_3 = st.columns(3)
-
     with col_1:
         with st.container(border=True):
             st.markdown(
@@ -195,10 +179,8 @@ def call_to_action_section() -> None:
 # ============================
 
 if __name__ == '__main__':
-    header_section()
-    spacer()
-
-    workflow_section()
+    header()
+    workflow()
     spacer()
 
     data_format_section()

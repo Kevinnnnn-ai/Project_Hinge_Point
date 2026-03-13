@@ -86,11 +86,22 @@ def calculate(workspace_id: str) -> None:
     dataframe = st.session_state.workspaces[workspace_id]['dataframe']
     if dataframe is not None:
         try:
-            pre_heading     = dataframe.columns[1] # columns could be named differently, so define it as a numerical location
-            post_heading    = dataframe.columns[2]
-            pre_scores      = dataframe[pre_heading]
-            post_scores     = dataframe[post_heading]
-            sample_size     = len(dataframe)
+            pre_heading         = dataframe.columns[1] # columns could be named differently, so define it as a numerical location
+            post_heading        = dataframe.columns[2]
+            pre_scores          = dataframe[pre_heading]
+            post_scores         = dataframe[post_heading]
+            sample_size         = len(dataframe)
+            students_improved   = int((post_scores > pre_scores).sum())
+            students_unchanged  = int((post_scores == pre_scores).sum())
+            students_regressed  = int((post_scores < pre_scores).sum())
+        
+            st.session_state.workspaces[workspace_id]['dataframe_statistics'].update(
+                {
+                    'students_improved': students_improved,
+                    'students_unchanged': students_unchanged,
+                    'students_regressed': students_regressed,
+                }
+            )
 
             st.session_state.workspaces[workspace_id]['dataframe_statistics'].update({'sample_size': sample_size})
         except:
@@ -274,27 +285,32 @@ def key_metrics(workspace_id: str) -> None:
         
         col_1, col_2 = st.columns([1, 3])
         if dataframe is not None:
-            post_mean   = st.session_state.workspaces[workspace_id]['post_score_statistics']['post_mean']
-            mean_diff   = st.session_state.workspaces[workspace_id]['dataframe_statistics']['mean_diff']
-            cohens_d    = st.session_state.workspaces[workspace_id]['dataframe_statistics']['cohens_d']
-            hinge_point = st.session_state.workspaces[workspace_id]['dataframe_statistics']['hinge_point']
-            is_above_hinge = st.session_state.workspaces[workspace_id]['dataframe_statistics']['is_above_hinge']
-            pre_std     = st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_std']
-            post_std    = st.session_state.workspaces[workspace_id]['post_score_statistics']['post_std']
-            pooled_std  = st.session_state.workspaces[workspace_id]['dataframe_statistics']['pooled_std']
+            sample_size     = st.session_state.workspaces[workspace_id]['dataframe_statistics']['sample_size']
+            post_mean       = st.session_state.workspaces[workspace_id]['post_score_statistics']['post_mean']
+            pre_mean        = st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_mean']
+            mean_diff       = st.session_state.workspaces[workspace_id]['dataframe_statistics']['mean_diff']
+            cohens_d        = st.session_state.workspaces[workspace_id]['dataframe_statistics']['cohens_d']
+            hinge_point     = st.session_state.workspaces[workspace_id]['dataframe_statistics']['hinge_point']
+            is_above_hinge  = st.session_state.workspaces[workspace_id]['dataframe_statistics']['is_above_hinge']
+            pre_std         = st.session_state.workspaces[workspace_id]['pre_score_statistics']['pre_std']
+            post_std        = st.session_state.workspaces[workspace_id]['post_score_statistics']['post_std']
+            pooled_std      = st.session_state.workspaces[workspace_id]['dataframe_statistics']['pooled_std']
 
             try:
                 with col_1:
                     st.metric(
                         label='Post-test Mean (x̄₂)',
                         border=True, value=f'{post_mean:.2f}',
-                        delta=f'{mean_diff:.2f}',
+                        delta=f'{mean_diff:.2f} ({mean_diff / pre_mean * 100:.2f}%)',
                     )
+
+                    std_diff = post_std - pre_std
                     st.metric(
                         label='Post-test SD (s₂)',
-                        value=f'{post_std:.2f}', border=True,
-                        delta=f'{post_std - pre_std:-.2f}', delta_color='inverse',
+                        border=True, value=f'{post_std:.2f}', delta_color='inverse',
+                        delta=f'{std_diff:-.2f} ({std_diff / pre_std * 100:.2f}%)',
                     )
+
             except:
                 st.error('**RUNTIME ERROR**: Key metrics display 1 error.')
             
@@ -396,6 +412,55 @@ def key_metrics(workspace_id: str) -> None:
                 
                 with st.container(border=True):
                     st.plotly_chart(gauge, width='stretch', height=255)
+
+        col_5, col_6, col_7 = st.columns(3)
+        if dataframe is not None:
+            sample_size = st.session_state.workspaces[workspace_id]['dataframe_statistics']['sample_size']
+            improved    = st.session_state.workspaces[workspace_id]['dataframe_statistics']['students_improved']
+            unchanged   = st.session_state.workspaces[workspace_id]['dataframe_statistics']['students_unchanged']
+            regressed   = st.session_state.workspaces[workspace_id]['dataframe_statistics']['students_regressed']
+
+            try:
+                col_5.metric(
+                    label='Improved Students',
+                    value=improved, border=True,
+                    delta=f'{improved} ({improved / sample_size * 100:.2f}%)',
+                )
+
+                col_6.metric(
+                    label='Unchanged Students',
+                    value=unchanged, border=True, delta_color='inverse',
+                    delta=f'{unchanged} ({unchanged / sample_size * 100:.2f}%)',
+                )
+
+                col_7.metric(
+                    label='Regressed Students',
+                    value=regressed, border=True, delta_color='inverse',
+                    delta=f'{regressed} ({regressed / sample_size * 100:.2f}%)',
+                )
+                
+            except:
+                st.error('**RUNTIME ERROR**: Key metrics display 3 error.')
+
+        else:
+            col_5.metric(
+                label='Improved Students', 
+                value=0, border=True, delta_color='off',
+                delta=f'{0} ({0:.2f}%)',
+            )
+
+            col_6.metric(
+                label='Unchanged Students',
+                value=0, border=True, delta_color='off',
+                delta=f'{0} ({0:.2f}%)',
+            )
+
+            col_7.metric(
+                label='Regressed Students',
+                value=0, border=True, delta_color='off',
+                delta=f'{0} ({0:.2f}%)',
+            )
+                    
 
 def make_workspace_page(workspace_id: str) -> callable:
     def workspace_page(): # convert workspace_id to a callable that can be used as a page

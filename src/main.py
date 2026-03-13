@@ -43,7 +43,8 @@ def get_new_workspace() -> None:
         'dataframe': None,
         'dataframe_statistics': {
             'sample_size': None, 'mean_diff': None, 'pooled_std': None, 'cohens_d': None,
-            'hinge_point': None, 'is_above_hinge': None,
+            'hinge_point': None, 'is_above_hinge': None, 'students_improved': None, 'students_unchanged': None,
+            'students_regressed': None,
         },
         'pre_score_statistics': {
             'pre_min': None, 'pre_max': None, 'pre_range': None, 'pre_mean': None,
